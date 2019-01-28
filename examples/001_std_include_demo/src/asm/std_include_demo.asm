@@ -1,10 +1,10 @@
 ;==============================================================================
-; Name:         Atari 2600 standard include file.
-; Filename:     a2k6std.inc
+; Name:         Standard Include Demo.
+; Filename:     std_include_demo.asm
 ; Platform:     Atari 2600
 ; Language:		6507 Assembly Language (https://www.cc65.org/doc/ca65.html)
 ; Author:       Justin Lane (atari2600@jigglesoft.co.uk)
-; Date:         2019-01-26 12:14
+; Date:         2019-01-28 18:02
 ; Vesion:		1.0.1
 ;------------------------------------------------------------------------------
 ; Licence:		This file is licensed under the following licence:-
@@ -14,45 +14,50 @@
 
 
 ;==============================================================================
-; Atari 2600 Standard Include.
+; Standard Include Demo.
 ;==============================================================================
 
-				.OUT		"Atari 2600 Standard Includes."
+				.OUT			"Standard Include Demo."
 
 ;------------------------------------------------------------------------------
-; Platform Specific Build Configuration.
-;------------------------------------------------------------------------------
 
-; Atari 2600 Platform Specific Build Configurations (PAL, NTSC, SECAM, CUSTOM).
-
-				.INCLUDE		"a2k6plat.inc"
-
-
+				; Atari 2600 Standard Include.
+				.INCLUDE		"a2k6std.inc"
 
 ;------------------------------------------------------------------------------
-; Hardware (RIOT) RAM and (RIOT, TIA) Registers.
+
+				.CODE
+
+startup:
+				A2K6_COLD_INIT
+init:
+				; Initialse application state.
+				NOP
+run:
+				; Run demo.
+				JSR				run_demo
+main_loop:
+				; Main loop.
+				NOP
+done:
+				; Uninitialise state.
+				NOP
+shutdown:
+				; Shutdown and halt.
+				A2K6_WARM_INIT
+endless:		JMP				endless
+
+
+
 ;------------------------------------------------------------------------------
 
-; Atari 2600 RIOT chip; Random Access Memory (RAM), Input Output(I/O), & Timer.
-
-				.INCLUDE		"a2k6riot.inc"
-
-
-; Atari 2600 TIA chip; Television Interface Adapter (Display, IO, Audio).
-
-				.INCLUDE		"a2k6tia.inc"
-
-
+stdincdemo:		.INCLUDE		"std_include_demo.inc"
 
 ;------------------------------------------------------------------------------
-; Hardware (CPU, RIOT, TIA) Initialisation.
-;------------------------------------------------------------------------------
 
-; Atari 2600 Initialise Hardware following Power-up/Reset (CPU, RIOT, TIA).
+				.CODE
 
-				.INCLUDE		"a2k6init.inc"
-
-
+				CPU_RESET_VEC	startup
 
 ;------------------------------------------------------------------------------
 

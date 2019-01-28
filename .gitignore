@@ -14,3 +14,6 @@ tmp/**/*
 
 build/binout/
 build/**/binout/
+
+examples/binout/
+examples/**/binout/
