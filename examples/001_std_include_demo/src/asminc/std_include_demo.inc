@@ -25,6 +25,7 @@
 		.CODE
 
 run_demo:
+		LDY				#$00
 		LDA				#COL_MAGENTA
 		STA				COLUPF
 firstframe:
@@ -57,11 +58,12 @@ visible_mid:
 		STA				COLUBK
 		LDX				#VID_VVISIBLE_LINE-3
 nextline:
-		STX				COLUBK
+		STY				COLUBK
 		STX				PF1
 		STX				PF0
 		STX				PF2
 		STA				WSYNC
+		DEY
 		DEX
 		BNE				nextline
 visible_bot:

@@ -1,5 +1,5 @@
-@ECHO OFF
-REM Build Script Using Simple DOS Batch File Only.
+@echo off
+rem Build Script Using Simple DOS Batch File Only.
 
 set APP_NAME=std_include_demo
 set BUILD_DIR=binout
