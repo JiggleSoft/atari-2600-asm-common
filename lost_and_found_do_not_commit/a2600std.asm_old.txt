@@ -1,0 +1,122 @@
+;==============================================================================
+; Name:         Atari 2600 (JiggleSoft) Standard Include File
+; Filename:     a2600std.inc
+; Platform:     Atari 2600
+; Author:       Justin Lane (atari2600@jigglesoft.co.uk)
+; Date:         2018-12-05 18:30
+;------------------------------------------------------------------------------
+
+
+; TIA
+
+; PLAYFIELD
+
+; Playfield 0 Bitmap data byte comma separated bits (bits 0-3)
+.MACRO			PF0BMCSV		B0,B1,B2,B3
+				.BYTE			(B0<<4)|(B1<<5)|(B2<<6)|(B3<<7)
+.ENDMACRO
+
+; Playfield 1 Bitmap data byte comma separated bits (bits 4-11)
+.MACRO			PF1BMCSV		B4,B5,B6,B7,B8,B9,B10,B11
+				.BYTE			(B4<<7)|(B5<<6)|(B6<<5)|(B7<<4)|(B8<<3)|(B9<<2)|(B10<<1)|(B11)
+.ENDMACRO
+
+; Playfield 2 Bitmap data byte comma separated bits (bits 12-19)
+.MACRO			PF2BMCSV		B12,B13,B14,B15,B16,B17,B18,B19
+				.BYTE			(B12)|(B13<<1)|(B14<<2)|(B15<<3)|(B16<<4)|(B17<<5)|(B18<<6)|(B19<<7)
+.ENDMACRO
+
+; Playfield 0, 1, 2 Bitmap 3 data bytes comma separated bits (bits 0-19)
+.MACRO			PFBM3CSV		B0,B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11,B12,B13,B14,B15,B16,B17,B18,B19
+				PF0BMCSV		B0,B1,B2,B3
+				PF1BMCSV		B4,B5,B6,B7,B8,B9,B10,B11
+				PF2BMCSV		B12,B13,B14,B15,B16,B17,B18,B19
+.ENDMACRO
+
+; Playfield 0, 1, 2, 0, 1, 2 Bitmap 6 data bytes comma separated bits (bits 0-39)
+.MACRO			PFBM6CSV		B00,B01,B02,B03,B04,B05,B06,B07,B08,B09,B10,B11,B12,B13,B14,B15,B16,B17,B18,B19,B20,B21,B22,B23,B24,B25,B26,B27,B28,B29,B30,B31,B32,B33,B34,B35,B36,B37,B38,B39
+				PF0BMCSV		B00,B01,B02,B03
+				PF1BMCSV		B04,B05,B06,B07,B08,B09,B10,B11
+				PF2BMCSV		B12,B13,B14,B15,B16,B17,B18,B19
+				PF0BMCSV		B20,B21,B22,B23
+				PF1BMCSV		B24,B25,B26,B27,B28,B29,B30,B31
+				PF2BMCSV		B32,B33,B34,B35,B36,B37,B38,B39
+.ENDMACRO
+
+; Playfield 0(left)+0(right), 1, 2, 1, 2 Bitmap 5 data bytes comma separated bits (bits 0-39)
+.MACRO			PFBM6CSV		B00,B01,B02,B03,B04,B05,B06,B07,B08,B09,B10,B11,B12,B13,B14,B15,B16,B17,B18,B19,B20,B21,B22,B23,B24,B25,B26,B27,B28,B29,B30,B31,B32,B33,B34,B35,B36,B37,B38,B39
+				.BYTE			(B20)|(B21<<1)|(B22<<2)|(B23<<3)|(B0<<4)|(B1<<5)|(B2<<6)|(B3<<7)
+				PF1BMCSV		B04,B05,B06,B07,B08,B09,B10,B11
+				PF2BMCSV		B12,B13,B14,B15,B16,B17,B18,B19
+				PF1BMCSV		B24,B25,B26,B27,B28,B29,B30,B31
+				PF2BMCSV		B32,B33,B34,B35,B36,B37,B38,B39
+.ENDMACRO
+
+
+; Playfield 0 Bitmap data byte comma separated bits (bits 0-3)
+.MACRO			PF0BMVAL		BV
+;				.BYTE			(B0<<4)|(B1<<5)|(B2<<6)|(B3<<7)
+.ENDMACRO
+
+; Playfield 1 Bitmap data byte comma separated bits (bits 4-11)
+.MACRO			PF1BMVAL		BV
+;				.BYTE			(B4<<7)|(B5<<6)|(B6<<5)|(B7<<4)|(B8<<3)|(B9<<2)|(B10<<1)|(B11)
+.ENDMACRO
+
+; Playfield 2 Bitmap data byte comma separated bits (bits 12-19)
+.MACRO			PF2BMVAL		BV
+;				.BYTE			(B12)|(B13<<1)|(B14<<2)|(B15<<3)|(B16<<4)|(B17<<5)|(B18<<6)|(B19<<7)
+.ENDMACRO
+
+; Playfield 0, 1, 2 Bitmap 3 data bytes comma separated bits (bits 0-19)
+.MACRO			PFBM3VAL		BV
+;				PF0BMCSV		B0,B1,B2,B3
+;				PF1BMCSV		B4,B5,B6,B7,B8,B9,B10,B11
+;				PF2BMCSV		B12,B13,B14,B15,B16,B17,B18,B19
+.ENDMACRO
+
+; Playfield 0, 1, 2, 0, 1, 2 Bitmap 6 data bytes comma separated bits (bits 0-39)
+.MACRO			PFBM6VAL		BV
+;				PF0BMCSV		B00,B01,B02,B03
+;				PF1BMCSV		B04,B05,B06,B07,B08,B09,B10,B11
+;				PF2BMCSV		B12,B13,B14,B15,B16,B17,B18,B19
+;				PF0BMCSV		B20,B21,B22,B23
+;				PF1BMCSV		B24,B25,B26,B27,B28,B29,B30,B31
+;				PF2BMCSV		B32,B33,B34,B35,B36,B37,B38,B39
+.ENDMACRO
+
+; Playfield 0(left)+0(right), 1, 2, 1, 2 Bitmap 5 data bytes comma separated bits (bits 0-39)
+.MACRO			PFBM6VAL		BV
+;				.BYTE			(B20)|(B21<<1)|(B22<<2)|(B23<<3)|(B0<<4)|(B1<<5)|(B2<<6)|(B3<<7)
+;				PF1BMCSV		B04,B05,B06,B07,B08,B09,B10,B11
+;				PF2BMCSV		B12,B13,B14,B15,B16,B17,B18,B19
+;				PF1BMCSV		B24,B25,B26,B27,B28,B29,B30,B31
+;				PF2BMCSV		B32,B33,B34,B35,B36,B37,B38,B39
+.ENDMACRO
+
+
+
+
+
+
+				PF0BMCSV		0,1,0,1
+				PF1BMCSV		1,0,0,1,1,0,1,0
+				PF2BMCSV		1,1,1,1,0,0,1,1
+
+				PFBM3CSV		1,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0
+								
+				PFBM6CSV		1,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0
+
+				PFBM5CSV		1,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0
+				
+				PF0BMVAL		%0101
+				PF1BMVAL		%10011010
+				PF2BMVAL		%11110011
+
+				PFBVMVAL		%100010000000010000000
+								
+				PFBVMVAL		%100010000000010000000100010000000010000000
+
+				PFBVMVAL		%100010000000010000000100010000000010000000
+				
+				

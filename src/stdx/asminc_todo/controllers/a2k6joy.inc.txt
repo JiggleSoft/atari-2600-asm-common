@@ -1,0 +1,158 @@
+;==============================================================================
+; Name:         Atari 2600 joystick / controller include file.
+; Filename:     a2k6joy.inc
+; Platform:     Atari 2600
+; Language:		6507 Assembly Language (https://www.cc65.org/doc/ca65.html)
+; Author:       Justin Lane (atari2600@jigglesoft.co.uk)
+; Date:         2019-10-13 21:36
+; Vesion:		0.3.0
+;------------------------------------------------------------------------------
+; Licence:		This file is licensed under the following licence:-
+;				 		CC Attribution 3.0 Unported
+;						http://creativecommons.org/licenses/by/3.0/
+;------------------------------------------------------------------------------
+; List of supported joysticks and controllers:-
+;   Std  Control   A/D  Num/Port  Directions  Buttons  Models
+;   Yes  Joystick  D    1         4 (+4diag)  1        CX10/CX24/CX40/CX42/CX43
+;        Joysitck  D    1         4 (+4diag)  2        CX34/CX78
+;        Joystick  D    2         4 (+4diag)  1
+;        Joystick  A    1         2 (XYaxis)  1
+;        Joystick  A    1         2 (XYaxis)  2-4
+;   Yes  Paddle    A    2         1 (1 axis)  1        CX30/CX30-04
+;	Yes  Driving   ?    1         1 (1 grey)  1        CX20/CX20-01
+;   Yes  Keyboard  D    1         0           12       CX50/CX21/CX23
+;
+;   Yes  TrackBall A/D  1         ?????????   1        CX22/CX80
+;
+;   Yes  Light Gun ?    1         ??????????  1        XG-1
+;
+; 	Track Ball: 2 axis, 1?2? fire button(s)? (Analogue+Digital Modes) (CX22/CX80)
+;
+;
+;  Light Gun
+;
+;
+; CX50 = Keyboard Controller
+; CX21 = Touch pad Controller
+; CX23 = Kids Controller
+;------------------------------------------------------------------------------
+
+
+;==============================================================================
+; Atari 2600 Controllers - Joystick, Paddles, Keypad, etc.
+;==============================================================================
+
+				.PUSHSEG
+
+;------------------------------------------------------------------------------
+; FIXME: Impl.
+;------------------------------------------------------------------------------
+
+; TODO: Impl.
+
+;------------------------------------------------------------------------------
+; Digital Joystick (CX-???) x 2 (1 each Controller Port) Single Fire Button.
+;------------------------------------------------------------------------------
+
+; Player 1 and Player 2 Digital Joysicks (CX-???) Single Fire Button.
+
+.MACRO		JOY_INIT
+			LDA			#$00		; Player 1 and Player 2 Directions Input.
+			STA			DDIRREGA
+.ENDMACRO
+
+
+.MACRO		VSYNC_START	DUMPI0123,LATCHI4I5
+.ENDMACRO
+
+.MACRO		VSYNC_STOP	DUMPI0123,LATCHI4I5
+.ENDMACRO
+
+.MACRO		JOY_VSYNC	START,DUMPI0123,LATCHI4I5
+.IF			DUMPI0123 = 0
+.IF			LATCHI4I5 = 0
+			LDA			#$00
+.ELSE
+			LDA			#VSYNC_LATCHI4I5
+.ENDIF
+.ELSE
+.IF			LATCHI4I5 = 0
+			LDA			#(VSYNC_DUMPI0123|LATCHI4I5)
+.ELSE
+			LDA			#VSYNC_DUMPI0123
+.ENDIF
+			STA
+.ENDIF
+
+			LDA			#$00
+			STA			VSYNC
+.ENDMACRO
+
+
+.MACRO		JOY_VBLANK	LATCH
+			LDA			#$00
+.ENDMACRO
+
+
+.MACRO		JOY_READ
+			; Directions
+			LDA			DATAREGA
+			PHA
+			AND			#$JPY_P1
+			STA			JOYP1UDLR
+			PLA
+			AND			#$JPY_P2
+			STA			JOYP2UDLR
+			; Fire Buttons
+			LDA			INP4
+			STA			JOYP1FIRE
+			LDA			INP5
+			STA			JOYP2FIRE
+.ENDMACRO
+
+
+.MACRO		JOY_READ_DATA
+JOY_UP		=			66
+JOY_DOWN	=			66
+JOY_LEFT	=			66
+JOY_RIGHT	=			66
+			.DATA
+JOYP1UDLR	.RES		1
+JOYP2UDLR	.RES		1
+JOYP1FIRE	.RES		1
+JOYP2FIRE	.RES		1
+.ENDMACRO
+
+;------------------------------------------------------------------------------
+; Digital Joystick (CX-???) x 2 (1 each Controller Port) Double Fire Button.
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; Digital Joystick & Paddle x 2 (1 each Controller Port) Single??? Fire Button.
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; Analogue Joystick (??-???) x 2 (1 each Controller Port) ? Fire Button.
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; Paddles (??-???) x 4 (2 each Controller Port) Single Fire Button.
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; Driving Controller (CX-20) x 2 (1 each Controller Port) Single??? Fire Button.
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; Touchpad / Keyboard / Kids Controller (CX-21/CX-50/CX-23 ?SAME?) x 2 (1 each Controller Port).
+;------------------------------------------------------------------------------
+
+
+
+;------------------------------------------------------------------------------
+
+				.POPSEG
+
+;------------------------------------------------------------------------------
+
+

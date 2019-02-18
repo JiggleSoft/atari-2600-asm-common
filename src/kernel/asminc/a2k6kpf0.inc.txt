@@ -1,0 +1,306 @@
+;==============================================================================
+; Name:         Atari 2600 Kernel Playfield 0.
+; Filename:     a2k6_kernel_pf0.inc
+; Platform:     Atari 2600
+; Language:		6507 Assembly Language (https://www.cc65.org/doc/ca65.html)
+; Author:       Justin Lane (atari2600@jigglesoft.co.uk)
+; Date:         2018-12-30 22:28
+;------------------------------------------------------------------------------
+; Licence:		This file is licensed under the following licence:-
+;				 		CC Attribution 3.0 Unported
+;						http://creativecommons.org/licenses/by/3.0/
+;------------------------------------------------------------------------------
+
+
+;==============================================================================
+; Atari 2600 - Kernel
+;	Single Background Colour and Foreground Color.
+;	Fixed Pixel Height.
+; 	Asymetric Playfield Matrix.
+;==============================================================================
+
+				.PUSHSEG
+
+;------------------------------------------------------------------------------
+;
+;------------------------------------------------------------------------------
+
+			.DATA
+
+;vid_pf_ptr:	.RES		2
+
+;vid_height:	.RES		1
+;vid_repeat:	.RES		1
+;vid_vb_col:	.RES		1
+;vid_bk_col:	.RES		1
+;vid_pf_col:	.RES		1
+;vid_os_col:	.RES		1
+
+
+
+;------------------------------------------------------------------------------
+; Kernel Display Region Rendering Macros
+;------------------------------------------------------------------------------
+
+; Vertical Sync
+
+;.MACRO		KPF0_VSYNC
+;			VID_VSYNC
+;			LDA	#COL_GREEN
+;			STA COLUBK
+;.ENDMACRO
+
+
+
+; Vertical Blank
+
+.MACRO		KPF0_VBLANK
+;;;			VID_VBLANK
+;LDA	#COL_BLACK
+;STA COLUBK
+;LDA	#COL_BLUE
+;STA COLUPF
+.ENDMACRO
+
+
+
+; Visible Screen
+
+.MACRO		KPF0_VISIBLE
+;			NOP
+.ENDMACRO
+
+
+
+; Vertical Overscan
+
+.MACRO		KPF0_OVERSCAN
+;;;		VID_OVERSCAN
+;	LDA	#COL_RED
+;	STA COLUBK
+.ENDMACRO
+
+
+
+
+;------------------------------------------------------------------------------
+; Kernel Display Rendering Macros
+;------------------------------------------------------------------------------
+
+.MACRO		KPF0_CONFIG		pfdata
+.ENDMACRO
+
+
+.MACRO		KPF0_SPLASH	frames,pfdata
+			.LOCAL		nextframe
+;			LDY			#frames
+nextframe:
+;			KPF0_VSYNC
+
+;			KPF0_VBLANK
+
+
+;			KPF0_VISIBLE
+
+;			KPF0_OVERSCAN
+
+;			DEY
+;			BNE			nextframe
+
+.ENDMACRO
+
+
+.MACRO		KPF0_SHOW	pfdata
+;			KPF0_VSYNC
+
+;			KPF0_VBLANK
+
+
+;			KPF0_VISIBLE
+
+;			KPF0_OVERSCAN
+
+.ENDMACRO
+
+;;;;;TODO: SEPARATE COFIG ATTRIBUTE SET UP AND DATA TO RENDER
+
+
+
+;------------------------------------------------------------------------------
+; Playfield Data
+;------------------------------------------------------------------------------
+
+; Define Start of Playfield Data
+
+.MACRO		KPF0_BEGIN	vbcol,bkcol,pfcol,oscol,height,repeat
+			.BYTE		vbcol	; Vertical Blank Background Colour.
+			.BYTE		bkcol	; Visible Display Background Colour.
+			.BYTE		pfcol	; Playfield Colour.
+			.BYTE		oscol	; Overscan Background Colour.
+			.BYTE		height	; Number of Horizontal Lines of Playfield Data.
+			.BYTE		repeat	; Size of each Horizontal Line (line repeat).
+.ENDMACRO
+
+
+
+; Define Data for a Horizontal Line of an Asymetric Playfield
+
+.MACRO		KPF0_PFCSV	B0,B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11,B12,B13,B14,B15,B16,B17,B18,B19,B20,B21,B22,B23,B24,B25,B26,B27,B28,B29,B30,B31,B32,B33,B34,B35,B36,B37,B38,B39
+	PF_6_40CSV	B0,B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11,B12,B13,B14,B15,B16,B17,B18,B19,B20,B21,B22,B23,B24,B25,B26,B27,B28,B29,B30,B31,B32,B33,B34,B35,B36,B37,B38,B39
+.ENDMACRO
+
+
+
+; Define End of Playfield Data
+
+.MACRO		KPF0_END
+			;
+.ENDMACRO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;
+
+.MACRO		KPF0_DISPLAY	col_vblank,col_visible,col_playfield,col_overscan,playfield_data
+			KPF0_VSYNC
+			LDA			#COL_GREEN
+			STA			COLUBK
+			KPF0_VBLANK
+			LDA			#COL_BLACK
+			STA			COLUBK
+			LDA			#COL_
+			;TODO: SET BKCOL TO BACKGROUND COLOUR
+			;TODO: SET PFCOL TO PLAYFIELD COLOUR
+			KPF0_VISIBLE
+			;TODO: SET BKCOL TO VBLANK COLOUR
+			KPF0_OVERSCAN
+.ENDMACRO
+
+
+
+;------------------------------------------------------------------------------
+
+
+
+
+
+
+; Define Colour Data
+
+.MACRO		KPF0_COLOUR	col
+			.BYTE		col
+.ENDMACRO
+
+
+
+; Set Colour Immediately
+
+;.MACRO		KPF0_SETCOL	reg,col,dst
+;			.IF			reg="A"
+;			LDA			#col
+;			.ELIF		reg="X"
+;			LDX			#col
+;			.ELIF		reg="Y"
+;			LDY			#col
+;			.ELSE
+;			.ERROR		"!!!"
+;			.ENDIF
+;			.IF			dst="BK"
+;			.ELIF		dst="PF"
+;			.ELSE
+;			.ERROR		"Unknown destination colour!"
+;			STA
+;.ENDMACRO
+
+
+
+;
+
+.MACRO		KPF0_START		height,size
+.ENDMACRO
+
+
+
+;
+
+.MACRO		KPF0_REPPFVAL	rep,BVL,BVR
+	.BYTE		rep
+	PFBM6CSV	B0,B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11,B12,B13,B14,B15,B16,B17,B18,B19,B20,B21,B22,B23,B24,B25,B26,B27,B28,B29,B30,B31,B32,B33,B34,B35,B36,B37,B38,B39
+.ENDMACRO
+
+
+
+
+;------------------------------------------------------------------------------
+;
+;------------------------------------------------------------------------------
+;
+
+.MACRO		KPF0_SETBGCOLOUR	;	immediate and by address (indirect)
+;reg,col
+.ENDMACRO
+
+
+
+;
+
+.MACRO		KPF0_SETFGCOLOUR
+.ENDMACRO
+
+
+
+;------------------------------------------------------------------------------
+;
+;------------------------------------------------------------------------------
+
+;.MACRO		KPF0_SHOW	addr
+;.ENDMACRO
+
+
+;------------------------------------------------------------------------------
+;
+;------------------------------------------------------------------------------
+
+; move to test include
+.IFDEF	KPF0_TEST
+; show atari logo
+
+.ENDIF
+
+
+;.MACRO		KPF0_START	col_vb,col_bk,col_pf,height,size
+;			.BYTE		col_vb	; Background Colour Vertical Blank
+;			.BYTE		col_bk	; Background Colour Visible
+;			.BYTE		col_pf	; Playfield Colour
+
+;.ENDMACRO
+
+
+
+;
+
+;------------------------------------------------------------------------------
+
+				.POPSEG
+
+;------------------------------------------------------------------------------
+
+

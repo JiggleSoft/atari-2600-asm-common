@@ -34,12 +34,14 @@
 
 
 ; Initialise timer with line count value, div by 64, timer interrupt enabled.
-
-.macro		TIM_INIT_LINE		line
-			.IF (CPU_HORIZ_CLKS*line/64) != (CPU_HORIZ_CLKS*line/64+8)
+FIXME
+.MACRO		TIM_INIT_LINE		line
+			.WARNING .STRING((CPU_HORIZ_CLKS*(line)/64))
+			.WARNING .STRING(((CPU_HORIZ_CLKS+1)*(line)/64))
+			.IF (CPU_HORIZ_CLKS*(line)/64) != ((CPU_HORIZ_CLKS+8)*(line)/64)
 			.WARNING "Line count and time wait for interrupt may trigger on more than one line!"
 			.ENDIF
-			LDA					#(CPU_HORIZ_CLKS*line/64)
+			LDA					#(CPU_HORIZ_CLKS*(line)/64)
 			STA					WTIM64EI
 .ENDMACRO
 

@@ -1,0 +1,288 @@
+;==============================================================================
+; Name:         Atari 2600 video include file.
+; Filename:     a2k6vid.inc
+; Platform:     Atari 2600
+; Language:		6507 Assembly Language (https://www.cc65.org/doc/ca65.html)
+; Author:       Justin Lane (atari2600@jigglesoft.co.uk)
+; Date:         2018-12-19 18:55
+; Vesion:		0.1.0
+;------------------------------------------------------------------------------
+; Copyright:	Copyright (c) 2018 Justin Lane.
+;------------------------------------------------------------------------------
+; Licence:		This file is licensed under the following licence:-
+;				 		CC Attribution 3.0 Unported
+;						http://creativecommons.org/licenses/by/3.0/
+;------------------------------------------------------------------------------
+
+
+;==============================================================================
+; Atari 2600 Video.
+;==============================================================================
+
+				.PUSHSEG
+
+;------------------------------------------------------------------------------
+; Horizontal Sync
+;------------------------------------------------------------------------------
+
+;  Pause CPU until the start of the horizontal sync.
+
+.MACRO		VID_WAIT_HSYNC
+			sta			WSYNC
+.ENDMACRO
+
+
+
+.MACRO		VID_WAIT_HSYNC_D	hlines
+			.REPEAT		hlines
+			VID_WAIT_HSYNC
+			.ENDREPEAT
+.ENDMACRO
+
+
+.MACRO		VID_WAIT_HSYNC_R	reg
+			IF			reg = 'A'
+			.ELIF		reg = 'X'
+			DEX
+loopx:		VID_HSYNC
+			DEX
+			BNE			loopx
+			VID_HSYNC
+			.ELIF		reg = 'Y'
+			.ELSE
+			.ERROR		"VID_WAIT_HSYNC_R reg must be 'A', 'X', or 'Y'!"
+			.ENDIF
+.ENDMACRO
+
+
+.MACRO		VID_WAIT_HSYNC_K	hlines
+.ENDMACRO
+
+
+.MACRO		VID_WAIT_HSYNC_KMC	hlines
+
+.ENDMACRO
+
+
+; Block CPU until specified number of horizontal syncs have occured.
+
+.MACRO		VID_WAIT_HSYNC_LINES	hlines
+			.LOCAL		loop
+			.IF			hlines > 0
+			.IF			hlines > 3
+			LDX			#(hlines-1)
+loop:		VID_HSYNC
+			DEX
+			BNE			loop
+			VID_HSYNC
+			.ELSE
+			.REPEAT		hlines
+			VID_HSYNC
+			.ENDREPEAT
+			.ENDIF
+			.ELSE
+			.WARNING	"HSYNC hlines should be > 0 !"
+			.ENDIF
+.ENDMACRO
+
+
+
+;------------------------------------------------------------------------------
+; Vertical Sync
+;------------------------------------------------------------------------------
+;REVIEW: !!!!!!!!!!!!!!!!!!!!!
+; Vertical Sync for Horizontal Lines Specified minus 1 on with 1 off.
+
+.MACRO		VID_VSYNC_HL	hlines
+.LOCAL		loop
+			.IF			(hlines-1) > 0
+			LDA			#VSYNC_ON
+			STA			VSYNC
+			.IF			(hlines-1) > 3
+			LDX			#(hlines-2)
+			LDA			#VSYNC_OFF
+loop:		VID_HSYNC
+			DEX
+			BNE			loop
+			.ELSE
+			VID_HSYNC
+			LDA			#VSYNC_OFF
+			VID_HSYNC
+			.ENDIF
+			STA			VSYNC
+			VID_HSYNC
+			.ELSE
+			.ERROR		"VSYNC hlines must be >= 2 !"
+			.ENDIF
+.ENDMACRO
+
+
+
+; Vertical Sync for Platform Horizontal Lines (usually 2 on, 1 off).
+
+.MACRO		VID_VSYNC
+			VID_VSYNC_HL		VID_VSYNC_LCNT
+.ENDMACRO
+
+
+
+;------------------------------------------------------------------------------
+; Vertical Blank
+;------------------------------------------------------------------------------
+;REVIEW: !!!!!!!!!!!!!!!!!!!!!
+
+; Vertical Blank
+
+.MACRO		VID_VBLANK	ENABLE,DUMPI0123,LATCHI4I5
+.ENDMACRO
+
+
+.MACRO		VID_VBLANKz
+
+.ENDMACRO
+;FIXME DUMP and LATCH are part of VBLANK !!!! disable video.
+; Vertical Sync (ENABLE=1 to start, 0 to finish), DUMPI0123=0|1, LATCHI4I5=0|1.
+
+.MACRO		VID_VSYNC_EDL	ENABLE,DUMPI0123,LATCHI4I5
+			.IF			ENABLE = 0
+			.IF			DUMPI0123 = 0
+			.IF			LATCHI4I5 = 0
+						LDA			#$00
+			.ELSE
+						LDA			#LATCHI4I5_MASK
+			.ENDIF
+			.ELSE
+			.IF			LATCHI4I5 = 0
+						LDA			#(DUMPI0123_MASK|LATCHI4I5_MASK)
+			.ELSE
+						LDA			#DUMPI0123_MASK
+			.ENDIF
+			.ENDIF
+			.ELSE
+			.IF			DUMPI0123 = 0
+			.IF			LATCHI4I5 = 0
+						LDA			#VBLNKSTRT_MASK
+			.ELSE
+						LDA			#(VBLNKSTRT_MASK|LATCHI4I5_MASK)
+			.ENDIF
+			.ELSE
+			.IF			LATCHI4I5 = 0
+						LDA			#(VBLNKSTRT_MASK|DUMPI0123_MASK|LATCHI4I5_MASK)
+			.ELSE
+						LDA			#(VBLNKSTRT_MASK|DUMPI0123_MASK)
+			.ENDIF
+			.ENDIF
+			.ENDIF
+			STA			VSYNC
+.ENDMACRO
+
+
+;.MACRO		VID_VSYNC
+;			VID_VSYNC_EDL	1,0,0
+;			STA				WSYNC
+;			STA				WSYNC
+;			VID_VSYNC_EDL	0,0,0
+;			STA				WSYNC
+;.ENDMACRO
+
+
+
+; Vertical Blank for Platform Horizontal Lines (usually 37 for NTSC, 45 for PAL).
+
+.MACRO		VID_BLANK
+			VID_VBLANK_HL		VID_VBLANK_LCNT
+.ENDMACRO
+
+
+
+;------------------------------------------------------------------------------
+; Vertical Visible
+;------------------------------------------------------------------------------
+;REVIEW: !!!!!!!!!!!!!!!!!!!!!
+
+; Test Display
+
+.MACRO		VID_DISPLAY_TESTCARD
+ lda #$00
+ sta ENABL       ; Turn off sprites: ball, missiles and players
+ sta ENAM0
+ sta ENAM1
+ sta GRP0
+ sta GRP1
+ lda #$50
+ sta COLUBK      ; Background colour (green)
+ lda #$00
+ sta PF0         ; PF0 and PF2 will be "off" - changed mind.
+ sta PF2
+ lda #$D0        ; Playfield colour (sort of blue	)
+ sta COLUPF
+ lda #$01        ; Mirror Playfield#
+ sta CTRLPF
+
+ .REPEAT 37
+  STA WSYNC
+  .ENDREPEAT
+  LDA #77
+  STA COLUBK
+
+
+
+
+
+			.LOCAL		loop
+			LDX			#VID_VVISIBLE_LCNT
+ txa
+loop:
+ STX	PF1
+
+ STX	PF0
+ STX	PF2
+
+ STA COLUBK      ; Background colour
+
+
+			DEX
+			ADC #02
+			;DEC
+			STA			WSYNC
+			BNE			loop
+
+
+			 LDA #37
+			 STA COLUBK
+							.REPEAT 30
+			 STA WSYNC
+			 .ENDREPEAT
+.ENDMACRO
+
+
+
+;------------------------------------------------------------------------------
+; Vertical Overscan
+;------------------------------------------------------------------------------
+
+;REVIEW
+; MAKE GENERIC FUNC  FIXME
+
+.MACRO		VID_OVERSCAN_HL	hlines
+			VID_VBLANK	0,
+			VID_HSYNC	VID_OVERSCAN_LCNT
+.ENDMACRO
+
+
+
+; Overscan for Platform Horizontal Lines (usually 34 for NTSC, 41 for PAL).
+
+.MACRO		VID_OVERSCAN
+			VID_OVERSCAN_HL	VID_OVERSCAN_LCNT
+.ENDMACRO
+
+
+
+;------------------------------------------------------------------------------
+
+				.POPSEG
+
+;------------------------------------------------------------------------------
+
+
