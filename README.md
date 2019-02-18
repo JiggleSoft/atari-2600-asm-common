@@ -1,8 +1,8 @@
 # JiggleSoft
 ---
-## atari2600_common
-Atari 2600 common includes, headers, libraries, and tooling. 
-Home on GitHub (https://github.com/JiggleSoft/atari2600_common)
+## atari2600_asm_common
+Atari 2600 assembler common includes, headers, and libraries.
+Home on GitHub (https://github.com/JiggleSoft/atari2600_asm_common)
 ---
 ### Supported 6507 Assemblers
  * CA65 (https://www.cc65.org/doc/ca65.html)

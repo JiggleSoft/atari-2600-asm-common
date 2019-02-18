@@ -4,12 +4,13 @@
 ; Platform:     Atari 2600
 ; Language:		6507 Assembly Language (https://www.cc65.org/doc/ca65.html)
 ; Author:       Justin Lane (atari2600@jigglesoft.co.uk)
-; Date:         2019-01-28 19:33
-; Vesion:		1.1.0
+; Date:         2019-02-18 21:44
+; Vesion:		1.1.1
 ;------------------------------------------------------------------------------
 ; Licence:		This file is licensed under the following licence:-
-;				 		CC Attribution 3.0 Unported
-;						http://creativecommons.org/licenses/by/3.0/
+;						Creative Commons Attribution 4.0 International
+;						http://creativecommons.org/licenses/by/4.0/
+;						with an exception, see /LICENCE.txt file.
 ;------------------------------------------------------------------------------
 
 
