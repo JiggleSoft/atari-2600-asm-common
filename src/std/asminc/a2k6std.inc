@@ -2,15 +2,24 @@
 ; Name:         Atari 2600 standard include file.
 ; Filename:     a2k6std.inc
 ; Platform:     Atari 2600
-; Language:		6507 Assembly Language (https://www.cc65.org/doc/ca65.html)
+; Language:     6507 Assembly Language (https://cc65.github.io/doc/ca65.html)
 ; Author:       Justin Lane (atari2600@jigglesoft.co.uk)
-; Date:         2019-02-18 21:44
-; Vesion:		1.0.2
+; Date:         2020-11-02 23:21
+; Vesion:       1.2.0
 ;------------------------------------------------------------------------------
-; Licence:		This file is licensed under the following licence:-
-;						Creative Commons Attribution 4.0 International
-;						http://creativecommons.org/licenses/by/4.0/
-;						with an exception, see /LICENCE.txt file.
+; Copyright (c) 2020 Justin Lane
+;
+; Licensed under the Apache License, Version 2.0 (the "License");
+; you may not use this file except in compliance with the License.
+; You may obtain a copy of the License at
+;
+;     http://www.apache.org/licenses/LICENSE-2.0
+;
+; Unless required by applicable law or agreed to in writing, software
+; distributed under the License is distributed on an "AS IS" BASIS,
+; WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+; See the License for the specific language governing permissions and
+; limitations under the License.
 ;------------------------------------------------------------------------------
 
 
@@ -18,7 +27,7 @@
 ; Atari 2600 Standard Include.
 ;==============================================================================
 
-				.OUT		"Atari 2600 Standard Includes."
+                .OUT        "Atari 2600 Standard Includes."
 
 ;------------------------------------------------------------------------------
 ; Platform Specific Build Configuration.
@@ -26,7 +35,7 @@
 
 ; Atari 2600 Platform Specific Build Configurations (PAL, NTSC, SECAM, CUSTOM).
 
-				.INCLUDE		"a2k6plat.inc"
+                .INCLUDE        "a2k6plat.inc"
 
 
 
@@ -36,12 +45,12 @@
 
 ; Atari 2600 RIOT chip; Random Access Memory (RAM), Input Output(I/O), & Timer.
 
-				.INCLUDE		"a2k6riot.inc"
+                .INCLUDE        "a2k6riot.inc"
 
 
 ; Atari 2600 TIA chip; Television Interface Adapter (Display, IO, Audio).
 
-				.INCLUDE		"a2k6tia.inc"
+                .INCLUDE        "a2k6tia.inc"
 
 
 
@@ -51,7 +60,7 @@
 
 ; Atari 2600 Initialise Hardware following Power-up/Reset (CPU, RIOT, TIA).
 
-				.INCLUDE		"a2k6init.inc"
+                .INCLUDE        "a2k6init.inc"
 
 
 
