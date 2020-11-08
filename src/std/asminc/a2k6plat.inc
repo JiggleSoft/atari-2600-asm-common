@@ -5,7 +5,7 @@
 ; Language:     6507 Assembly Language (https://cc65.github.io/doc/ca65.html)
 ; Author:       Justin Lane (atari2600@jigglesoft.co.uk)
 ; Date:         2020-11-02 23:21
-; Version:      1.2.0
+; Version:      1.2.1
 ;------------------------------------------------------------------------------
 ; Copyright (c) 2020 Justin Lane
 ;
@@ -138,8 +138,8 @@
 ;        CPU_VVISIBLE_CLKS =         ; CPU clocks for the VVISIBLE display (CPU_HORIZ_CLKS * VID_VVISIBLE_LINE).
 ;        CPU_OVERSCAN_CLKS =         ; CPU clocks for the OVERSCAN (CPU_HORIZ_CLKS * VID_OVERSCAN_LINE).
 ;        ; Colours
-;        COL_COL_CNT       =         ; Number of unique colours.
-;        COL_BAW_CNT       =         ; Number of unique black and white shades.
+;        COL_COLOURS       =         ; Number of unique colours.
+;        COL_B_AND_W       =         ; Number of unique black and white shades.
 ;        .ENDIF
 
 
@@ -174,8 +174,8 @@
         CPU_VVISIBLE_CLKS =   18392 ; CPU clocks for the VVISIBLE display (CPU_HORIZ_CLKS * VID_VVISIBLE_LINE).
         CPU_OVERSCAN_CLKS =    2280 ; CPU clocks for the OVERSCAN (CPU_HORIZ_CLKS * VID_OVERSCAN_LINE).
         ; Colours
-        COL_COL_CNT       =     104 ; Number of unique colours.
-        COL_BAW_CNT       =       8 ; Number of unique black and white shades.
+        COL_COLOURS       =     104 ; Number of unique colours.
+        COL_B_AND_W       =       8 ; Number of unique black and white shades.
         .ENDIF
 
 
@@ -210,8 +210,8 @@
         CPU_VVISIBLE_CLKS =   14592 ; CPU clocks for the VVISIBLE display (CPU_HORIZ_CLKS * VID_VVISIBLE_LINE).
         CPU_OVERSCAN_CLKS =    2280 ; CPU clocks for the OVERSCAN (CPU_HORIZ_CLKS * VID_OVERSCAN_LINE).
         ; Colours
-        COL_COL_CNT       =     128 ; Number of unique colours.
-        COL_BAW_CNT       =       8 ; Number of unique black and white shades.
+        COL_COLOURS       =     128 ; Number of unique colours.
+        COL_B_AND_W       =       8 ; Number of unique black and white shades.
         .ENDIF
 
 
@@ -246,8 +246,8 @@
         CPU_VVISIBLE_CLKS =   18392 ; CPU clocks for the VVISIBLE display (CPU_HORIZ_CLKS * VID_VVISIBLE_LINE).
         CPU_OVERSCAN_CLKS =    2280 ; CPU clocks for the OVERSCAN (CPU_HORIZ_CLKS * VID_OVERSCAN_LINE).
         ; Colours
-        COL_COL_CNT       =       8 ; Number of unique colours.
-        COL_BAW_CNT       =       8 ; Number of unique black and white shades.
+        COL_COLOURS       =       8 ; Number of unique colours.
+        COL_B_AND_W       =       8 ; Number of unique black and white shades.
         .ENDIF
 
 
