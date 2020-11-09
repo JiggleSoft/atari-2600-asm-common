@@ -4,8 +4,8 @@
 ; Platform:     Atari 2600
 ; Language:     6507 Assembly Language (https://cc65.github.io/doc/ca65.html)
 ; Author:       Justin Lane (atari2600@jigglesoft.co.uk)
-; Date:         2020-11-02 23:21
-; Version:      1.2.2
+; Date:         2020-11-09 00:04
+; Version:      1.2.4
 ;------------------------------------------------------------------------------
 ; Copyright (c) 2020 Justin Lane
 ;
@@ -22,14 +22,14 @@
 ; limitations under the License.
 ;------------------------------------------------------------------------------
 
-        .IFNDEF     __A2K6PLAT_INC__
-        .DEFINE     __A2K6PLAT_INC__
+                .IFNDEF     __A2K6PLAT_INC__
+                .DEFINE     __A2K6PLAT_INC__
 
 ;==============================================================================
 ; Atari 2600 Platform Specific Build Configurations (PAL, NTSC, SECAM, CUSTOM).
 ;==============================================================================
 
-        .PUSHSEG
+                .PUSHSEG
 
 ;------------------------------------------------------------------------------
 ; Platform Specific Build Configuration Validation.
@@ -257,10 +257,10 @@
 
 ;------------------------------------------------------------------------------
 
-        .POPSEG
+                .POPSEG
 
 ;------------------------------------------------------------------------------
 
-        .ENDIF
+                .ENDIF
 
 
