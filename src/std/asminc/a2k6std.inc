@@ -4,8 +4,8 @@
 ; Platform:     Atari 2600
 ; Language:     6507 Assembly Language (https://cc65.github.io/doc/ca65.html)
 ; Author:       Justin Lane (atari2600@jigglesoft.co.uk)
-; Date:         2020-11-02 23:21
-; Version:      1.2.0
+; Date:         2020-11-25 23:04
+; Version:      2.0.0
 ;------------------------------------------------------------------------------
 ; Copyright (c) 2020 Justin Lane
 ;
