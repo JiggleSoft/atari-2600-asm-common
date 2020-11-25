@@ -1,4 +1,39 @@
 ;==============================================================================
+; Name:         Atari 2600 standard extra include file.
+; Filename:     a2k6stdx.inc
+; Platform:     Atari 2600
+; Language:     6507 Assembly Language (https://cc65.github.io/doc/ca65.html)
+; Author:       Justin Lane (atari2600@jigglesoft.co.uk)
+; Date:         2020-11-11 01:10
+; Version:      1.2.0
+;------------------------------------------------------------------------------
+; Copyright (c) 2020 Justin Lane
+;
+; Licensed under the Apache License, Version 2.0 (the "License");
+; you may not use this file except in compliance with the License.
+; You may obtain a copy of the License at
+;
+;     http://www.apache.org/licenses/LICENSE-2.0
+;
+; Unless required by applicable law or agreed to in writing, software
+; distributed under the License is distributed on an "AS IS" BASIS,
+; WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+; See the License for the specific language governing permissions and
+; limitations under the License.
+;------------------------------------------------------------------------------
+
+                .IFNDEF     __A2K6STDX__INC__
+                .DEFINE     __A2K6STDX__INC__
+
+;==============================================================================
+; Atari 2600 Standard Extra Include.
+;==============================================================================
+
+                .PUSHSEG
+
+                .OUT        "Atari 2600 Standard Extra Includes."
+
+;------------------------------------------------------------------------------;==============================================================================
 ; Name:         Atari 2600 Bank Switching utilities include file.
 ; Filename:     a2k6bank.inc
 ; Platform:     Atari 2600
@@ -13,9 +48,40 @@
 ;						with an exception, see /LICENCE.txt file.
 ;------------------------------------------------------------------------------
 ; Not applicable:-
+; 	1K - Atari 1 KByte (no bank switching required).
 ; 	2K - Atari 2 KByte (no bank switching required).
 ; 	4K - Atari 4 KByte (no bank switching required).
+;   CV - Commavid 2 KByte ROM, 1 KByte RAM (no bank switching required).
 ; Supported:-
+|   F8   | Atari Standard 8K                  |   8K |      |     | Strobe $1FF8 = Bank 0, $1FF9 = Bank 1 |
+| F8SC | Atari F8 with SARA Super Chip RAM  |   8K | 128B |     | Strobe $1FF8 = Bank 0, $1FF9 = Bank 1; RAM $1000-$107F (write), $1080-$10FF (read) |
+|   F6   | Atari Standard 16K                 |  16K |      |     | Strobe $1FF6 = Bank 0, $1FF7 = Bank 1, $1FF8 = Bank 2, $1FF9 = Bank 3 |
+| F6SC | Atari F6 with SARA Super Chip RAM  |  16K | 128B |     | Strobe $1FF6 = Bank 0, $1FF7 = Bank 1, $1FF8 = Bank 2, $1FF9 = Bank 3; RAM $1000-$107F (write), $1080-$10FF (read) |
+|   F4   | Atari Standard 32K                 |  32K |      |     | Strobe $1FF4 = Bank 0, $1FF5 = Bank 1, $1FF6 = Bank 2, $1FF7 = Bank 3, $1FF8 = Bank 4, $1FF9 = Bank 5, $1FFA = Bank 6, $1FFB = Bank 7 |
+| F4SC | Atari F4 with SARA Cuper Chip RAM  |  32K | 128B |     | Strobe $1FF4 = Bank 0, $1FF5 = Bank 1, $1FF6 = Bank 2, $1FF7 = Bank 3, $1FF8 = Bank 4, $1FF9 = Bank 5, $1FFA = Bank 6, $1FFB = Bank 7; RAM $1000-$107F (write), $1080-$10FF (read) |
+|   FE   | Activision 8K                      |   8K |      |     | TODO: Document this method (STACK ACCESS AND JSR/RTS WATCHING). |
+|   E0   | Parker bros. 8K                    |   8K |      |     | Strobe $1FE0-$1FE7 for ROM $1000-$13FF = Bank 0-7, Strobe $1FE8-$1FEF for ROM $1400-$17FF = Bank 0-7, Strobe $1FF0-$1FF7 for ROM $1800-$1BFF = Bank 0-7, ROM $1C00-$1FFF = Always Bank 7 |
+|   3F   | Tigervision 8K                     |   8K |      |     | Write $003F will latch lower two data bits D1-D0 the bank number to select 2K ROM bank mapped to $1000-17FF. $1800-1FFF = last 2K bank. TODO: Tidy up this note. |
+|   FA   | CBS RAM Plus 12K                   |  12K | 256B |     | Strobe $1FF8 = Bank 0, $1FF9 = Bank 1, $1FFA = Bank 2; RAM $1000-$10FF (write), $1100-$11FF (read) |
+|   E7   | M-network 16K                      |  16K | 2K?1K|     | Strobe $1FE0-$1FE6 for ROM $1000-$17FF = Bank 0-6, Strobe $1FE7 for ROM $1000-17FF = 1K RAM (what is read and write), ROM $1800-$1FFF = Always Bank 7 TODO: larify RAM size and addresses - RAM 2K (read) 2K (write)  or is it 1K?|
+|   F0   | Megaboy 64K                        |  64K |      |     | Strobe $1FF0 to increment to next 4K bank (0-15) with wrap around. Can use ROM location on all banks to indicate current bank. |
+|   UA   | UA Ltd 8K                          |   8K |      |     | Strobe $0220 = Bank 0, $0240 = Bank 1. |
+|  DPC  | Display Processor Chip             | 8K+2K|      | DPC | This was as used in Activisions Pitfall 2 and granted U.S. patent #4,644,495. See separate document for further details. TODO: add link to separate document. |
+; Experimental:-
+|  JL1  |                                    | 512K |  32K |     | 16 Books x 128 Pages x 512B ROM and 128 Pages x 512B RAM lower write, upper read mapped to 8 x 512B slots. | REVIEW
+|  JL2  |                                    |  16M | 256K |     | 256 Books x 128 Pages x 512B ROM and 128 Pages x 512B RAM lower write, upper read mapped to 8 x 512B slots. | REVIEW
+
+; Currently Unsupported:-
+|   EF    | NAME? (64K ROM)                    |      |      |     | TODO: Document this method. |
+|   3E   | (up to 512K ROM + 32K RAM)         |      |      |     | TODO: Document this method. |
+| 0840 | Econobanking                       |      |      |     | TODO: Document this method. |
+|   SB   | Superbanking                       |      |      |     | TODO: Document this method. |
+|   MC   | Megacart                           |      |      |     | TODO: Document this method. |
+|  X07  | Atariage                           |      |      |     | TODO: Document this method. |
+| 4A50 | Noname?
+
+
+;   CV - ????
 ; 	F6 - $0FF6/$0FF7/$0FF8/$0FF9 - 16K = 4 x 4K banks.
 ; 	F8 - $0FF8/$0FF9 - 8K = 2 x 4K banks.
 ; 	FA - $0FF8/$0FF9/$0FFA - 12K = 3 x 4K banks.
@@ -23,6 +89,8 @@
 ; 	E7 - $0FE0-$0FF7 - 16KB = 8 banks x 2K, 2 2K slices, slice 1 fixed bank 7.
 ;                      Note slice 0 bank 7 is RAM, slice 1 is bank 7 is ROM.
 ; 	FE - $01FE-$11FE - 8K = 2 x 4K banks (RTS can be used to swap back bank).
+; Experimental:-
+;
 ; Future support:-
 ; 	F6S -
 ;	F8S -
@@ -36,6 +104,60 @@
 ; 	084 -
 ; 	CU - Custom (others to be specified)
 ;------------------------------------------------------------------------------
+### Legacy Bankswitched
+
+These methods were originally utilised during the VCS's active lifespan.
+
+| Code | Name                               | ROM  | RAM  | SCP | Notes |
+| ---- | ---------------------------------- | ---- | ---- | --- | ----- |
+| CV   | Commavid                           |   2K |   1K |     | 2K ROM $1800-$1FFF; RAM $1000-$13FF (read), $1400-17FF (write) |
+| F8   | Atari Standard 8K                  |   8K |      |     | Strobe $1FF8 = Bank 0, $1FF9 = Bank 1 |
+| F8SC | Atari F8 with SARA Super Chip RAM  |   8K | 128B |     | Strobe $1FF8 = Bank 0, $1FF9 = Bank 1; RAM $1000-$107F (write), $1080-$10FF (read) |
+| F6   | Atari Standard 16K                 |  16K |      |     | Strobe $1FF6 = Bank 0, $1FF7 = Bank 1, $1FF8 = Bank 2, $1FF9 = Bank 3 |
+| F6SC | Atari F6 with SARA Super Chip RAM  |  16K | 128B |     | Strobe $1FF6 = Bank 0, $1FF7 = Bank 1, $1FF8 = Bank 2, $1FF9 = Bank 3; RAM $1000-$107F (write), $1080-$10FF (read) |
+| F4   | Atari Standard 32K                 |  32K |      |     | Strobe $1FF4 = Bank 0, $1FF5 = Bank 1, $1FF6 = Bank 2, $1FF7 = Bank 3, $1FF8 = Bank 4, $1FF9 = Bank 5, $1FFA = Bank 6, $1FFB = Bank 7 |
+| F4SC | Atari F4 with SARA Cuper Chip RAM  |  32K | 128B |     | Strobe $1FF4 = Bank 0, $1FF5 = Bank 1, $1FF6 = Bank 2, $1FF7 = Bank 3, $1FF8 = Bank 4, $1FF9 = Bank 5, $1FFA = Bank 6, $1FFB = Bank 7; RAM $1000-$107F (write), $1080-$10FF (read) |
+| FE   | Activision 8K                      |   8K |      |     | TODO: Document this method (STACK ACCESS AND JSR/RTS WATCHING). |
+| E0   | Parker bros. 8K                    |   8K |      |     | Strobe $1FE0-$1FE7 for ROM $1000-$13FF = Bank 0-7, Strobe $1FE8-$1FEF for ROM $1400-$17FF = Bank 0-7, Strobe $1FF0-$1FF7 for ROM $1800-$1BFF = Bank 0-7, ROM $1C00-$1FFF = Always Bank 7 |
+| 3F   | Tigervision 8K                     |   8K |      |     | Write $003F will latch lower two data bits D1-D0 the bank number to select 2K ROM bank mapped to $1000-17FF. $1800-1FFF = last 2K bank. TODO: Tidy up this note. |
+| FA   | CBS RAM Plus 12K                   |  12K | 256B |     | Strobe $1FF8 = Bank 0, $1FF9 = Bank 1, $1FFA = Bank 2; RAM $1000-$10FF (write), $1100-$11FF (read) |
+| E7   | M-network 16K                      |  16K | 2K?1K|     | Strobe $1FE0-$1FE6 for ROM $1000-$17FF = Bank 0-6, Strobe $1FE7 for ROM $1000-17FF = 1K RAM (what is read and write), ROM $1800-$1FFF = Always Bank 7 TODO: larify RAM size and addresses - RAM 2K (read) 2K (write)  or is it 1K?|
+| F0   | Megaboy 64K                        |  64K |      |     | Strobe $1FF0 to increment to next 4K bank (0-15) with wrap around. Can use ROM location on all banks to indicate current bank. |
+| UA   | UA Ltd 8K                          |   8K |      |     | Strobe $0220 = Bank 0, $0240 = Bank 1. |
+| DPC  | Display Processor Chip             | 8K+2K|      | DPC | This was as used in Activisions Pitfall 2 and granted U.S. patent #4,644,495. See separate document for further details. TODO: add link to separate document. |
+
+### Modern
+
+These methods were created by the homebrew community.
+
+| Code | Name                               | ROM  | RAM  | SCP | Notes |
+| ---- | ---------------------------------- | ---- | ---- | --- | ----- |
+| EF   | NAME? (64K ROM)                    |      |      |     | TODO: Document this method. |
+| 3E   | (up to 512K ROM + 32K RAM)         |      |      |     | TODO: Document this method. |
+| 0840 | Econobanking                       |      |      |     | TODO: Document this method. |
+| SB   | Superbanking                       |      |      |     | TODO: Document this method. |
+| MC   | Megacart                           |      |      |     | TODO: Document this method. |
+| X07  | Atariage                           |      |      |     | TODO: Document this method. |
+| 4A50 | Noname?
+
+### Experimental
+
+These methods are JiggleSoft's experimental bankswitching methods.
+
+| Code | Name                               | ROM  | RAM  | SCP | Notes |
+| ---- | ---------------------------------- | ---- | ---- | --- | ----- |
+| JL1  |                                    | 512K |  32K |     | 16 Books x 128 Pages x 512B ROM and 128 Pages x 512B RAM lower write, upper read mapped to 8 x 512B slots. | REVIEW
+| JL2  |                                    |  16M | 256K |     | 256 Books x 128 Pages x 512B ROM and 128 Pages x 512B RAM lower write, upper read mapped to 8 x 512B slots. | REVIEW
+TODO: Document the above two methods. TODO: Add link to separate document.
+
+### TODO
+
+Document AR (Arcadia Supercharger)
+ * DPC+
+ * Star Castle
+ * FA2 (Chetiry)
+
+
 
 
 ;==============================================================================
@@ -694,8 +816,10 @@ FE_BANK_1	:=	(FEB_BANK+FEO_BANK_1)	; FE bank switching bank 1 address.
 
 ;------------------------------------------------------------------------------
 
-				.POPSEG
+                .POPSEG
 
 ;------------------------------------------------------------------------------
+
+                .ENDIF
 
 

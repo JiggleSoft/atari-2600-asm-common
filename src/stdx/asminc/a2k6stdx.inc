@@ -2,23 +2,36 @@
 ; Name:         Atari 2600 standard extra include file.
 ; Filename:     a2k6stdx.inc
 ; Platform:     Atari 2600
-; Language:		6507 Assembly Language (https://www.cc65.org/doc/ca65.html)
+; Language:     6507 Assembly Language (https://cc65.github.io/doc/ca65.html)
 ; Author:       Justin Lane (atari2600@jigglesoft.co.uk)
-; Date:         2019-02-18 21:44
-; Vesion:		1.1.1
+; Date:         2020-11-11 01:10
+; Version:      1.2.0
 ;------------------------------------------------------------------------------
-; Licence:		This file is licensed under the following licence:-
-;						Creative Commons Attribution 4.0 International
-;						http://creativecommons.org/licenses/by/4.0/
-;						with an exception, see /LICENCE.txt file.
+; Copyright (c) 2020 Justin Lane
+;
+; Licensed under the Apache License, Version 2.0 (the "License");
+; you may not use this file except in compliance with the License.
+; You may obtain a copy of the License at
+;
+;     http://www.apache.org/licenses/LICENSE-2.0
+;
+; Unless required by applicable law or agreed to in writing, software
+; distributed under the License is distributed on an "AS IS" BASIS,
+; WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+; See the License for the specific language governing permissions and
+; limitations under the License.
 ;------------------------------------------------------------------------------
 
+                .IFNDEF     __A2K6STDX__INC__
+                .DEFINE     __A2K6STDX__INC__
 
 ;==============================================================================
 ; Atari 2600 Standard Extra Include.
 ;==============================================================================
 
-			.OUT		"Atari 2600 Standard Extra Includes."
+                .PUSHSEG
+
+                .OUT        "Atari 2600 Standard Extra Includes."
 
 ;------------------------------------------------------------------------------
 ; CPU Extra Include.
@@ -105,5 +118,12 @@
 ;REVIEW:			.INCLUDE	"a2k6lgun.inc"	; TODO: Impl.
 
 ;------------------------------------------------------------------------------
+
+                .POPSEG
+
+;------------------------------------------------------------------------------
+
+                .ENDIF
+
 
 

@@ -22,8 +22,8 @@
 ; limitations under the License.
 ;------------------------------------------------------------------------------
 
-                .IFNDEF     __A2K6RIOT_INC__
-                .DEFINE     __A2K6RIOT_INC__
+                .IFNDEF     __A2K6RIOT__INC__
+                .DEFINE     __A2K6RIOT__INC__
 
 ;==============================================================================
 ; Atari 2600 RIOT chip; Random Access Memory (RAM), Input Output(I/O), & Timer.

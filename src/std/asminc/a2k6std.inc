@@ -5,7 +5,7 @@
 ; Language:     6507 Assembly Language (https://cc65.github.io/doc/ca65.html)
 ; Author:       Justin Lane (atari2600@jigglesoft.co.uk)
 ; Date:         2020-11-02 23:21
-; Vesion:       1.2.0
+; Version:      1.2.0
 ;------------------------------------------------------------------------------
 ; Copyright (c) 2020 Justin Lane
 ;
@@ -22,10 +22,14 @@
 ; limitations under the License.
 ;------------------------------------------------------------------------------
 
+                .IFNDEF     __A2K6STD__INC__
+                .DEFINE     __A2K6STD__INC__
 
 ;==============================================================================
 ; Atari 2600 Standard Include.
 ;==============================================================================
+
+                .PUSHSEG
 
                 .OUT        "Atari 2600 Standard Includes."
 
@@ -35,7 +39,7 @@
 
 ; Atari 2600 Platform Specific Build Configurations (PAL, NTSC, SECAM, CUSTOM).
 
-                .INCLUDE        "a2k6plat.inc"
+                .INCLUDE    "a2k6plat.inc"
 
 
 
@@ -45,12 +49,12 @@
 
 ; Atari 2600 RIOT chip; Random Access Memory (RAM), Input Output(I/O), & Timer.
 
-                .INCLUDE        "a2k6riot.inc"
+                .INCLUDE    "a2k6riot.inc"
 
 
 ; Atari 2600 TIA chip; Television Interface Adapter (Display, IO, Audio).
 
-                .INCLUDE        "a2k6tia.inc"
+                .INCLUDE    "a2k6tia.inc"
 
 
 
@@ -60,10 +64,16 @@
 
 ; Atari 2600 Initialise Hardware following Power-up/Reset (CPU, RIOT, TIA).
 
-                .INCLUDE        "a2k6init.inc"
+                .INCLUDE    "a2k6init.inc"
 
 
 
 ;------------------------------------------------------------------------------
+
+                .POPSEG
+
+;------------------------------------------------------------------------------
+
+                .ENDIF
 
 

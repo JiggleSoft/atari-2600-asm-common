@@ -22,8 +22,8 @@
 ; limitations under the License.
 ;------------------------------------------------------------------------------
 
-                .IFNDEF     __A2K6PLAT_INC__
-                .DEFINE     __A2K6PLAT_INC__
+                .IFNDEF     __A2K6PLAT__INC__
+                .DEFINE     __A2K6PLAT__INC__
 
 ;==============================================================================
 ; Atari 2600 Platform Specific Build Configurations (PAL, NTSC, SECAM, CUSTOM).

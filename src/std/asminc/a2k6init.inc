@@ -4,8 +4,8 @@
 ; Platform:     Atari 2600
 ; Language:     6507 Assembly Language (https://cc65.github.io/doc/ca65.html)
 ; Author:       Justin Lane (atari2600@jigglesoft.co.uk)
-; Date:         2020-11-02 23:21
-; Vesion:       1.2.0
+; Date:         2020-11-11 01:06
+; Version:      1.2.1
 ;------------------------------------------------------------------------------
 ; Copyright (c) 2020 Justin Lane
 ;
@@ -22,8 +22,8 @@
 ; limitations under the License.
 ;------------------------------------------------------------------------------
 
-.IFNDEF         __A2K6INIT_INC__
-.DEFINE         __A2K6INIT_INC__
+                .IFNDEF     __A2K6INIT__INC__
+                .DEFINE     __A2K6INIT__INC__
 
 ;==============================================================================
 ; Atari 2600 Initialisation of Hardware following Power-up/Reset.
@@ -39,8 +39,8 @@
 
 .MACRO          CPU_INIT_SEI_CLD
                 ; Initialise CPU interrupt disable and clear decimal flag.
-                SEI                             ; Disable interrupts (I=1).
-                CLD                             ; Clear decimal flag (D=0).
+                SEI                 ; Disable interrupts (I=1).
+                CLD                 ; Clear decimal flag (D=0).
 .ENDMACRO
 
 
@@ -49,7 +49,7 @@
 
 .MACRO          CPU_INIT_SP
                 ; Initialise CPU stack pointer (SP).
-                LDX                 #$FF        ; Reset stack pointer (SP=$FF).
+                LDX         #$FF    ; Reset stack pointer (SP=$FF).
                 TXS
 .ENDMACRO
 
@@ -70,11 +70,11 @@
 .MACRO          CPU_CONFIG_VECTOR   RESET_ADDR
                 .PUSHSEG
                 ; Fills the rest of the address space (4K).
-                .SEGMENT            "VECTORS"
+                .SEGMENT    "VECTORS"
                 ; Set the NMI, RESET, and IRQ vectors.
-                .ADDR               RESET_ADDR  ; NMI (never occur on 6507).
-                .ADDR               RESET_ADDR  ; RESET.
-                .ADDR               RESET_ADDR  ; IRQ (only with BRK on 6507).
+                .ADDR       RESET_ADDR  ; NMI (never occur on 6507).
+                .ADDR       RESET_ADDR  ; RESET.
+                .ADDR       RESET_ADDR  ; IRQ (only with BRK on 6507).
                 .POPSEG
 .ENDMACRO
 
@@ -86,11 +86,11 @@
 .MACRO          CPU_CONFIG_VECTORS  NMI_ADDR,RESET_ADDR,IRQ_ADDR
                 .PUSHSEG
                 ; Fills the rest of the address space (4K).
-                .SEGMENT            "VECTORS"
+                .SEGMENT    "VECTORS"
                 ; Set the NMI, RESET, and IRQ vectors.
-                .ADDR               NMI_ADDR    ; NMI (never occur on 6507).
-                .ADDR               RESET_ADDR  ; RESET.
-                .ADDR               IRQ_ADDR    ; IRQ (only with BRK on 6507).
+                .ADDR       NMI_ADDR    ; NMI (never occur on 6507).
+                .ADDR       RESET_ADDR  ; RESET.
+                .ADDR       IRQ_ADDR    ; IRQ (only with BRK on 6507).
                 .POPSEG
 .ENDMACRO
 
@@ -104,14 +104,14 @@
 
 .MACRO          RIOT_RAM_INIT
                 ; Clear RAM (0x0080 - 0x00FF)
-                .LOCAL              ram_clr
-                LDX                 #$00
-                LDA                 #$00
+                .LOCAL      ram_clr
+                LDX         #$00
+                LDA         #$00
 ram_clr:
-                STA                 $80,X
+                STA         $80,X
                 INX
-                CPX                 #$80
-                BNE                 ram_clr
+                CPX         #$80
+                BNE         ram_clr
 .ENDMACRO
 
 
@@ -120,14 +120,14 @@ ram_clr:
 
 .MACRO          TIA_INIT_REG
                 ; Clear TIA (0x0040 - 0x007F).
-                .LOCAL              tia_clr
-                LDX                 #$00
-                LDA                 #$00
+                .LOCAL      tia_clr
+                LDX         #$00
+                LDA         #$00
 tia_clr:
-                STA                 $40,X
+                STA         $40,X
                 INX
-                CPX                 #$40
-                BNE                 tia_clr
+                CPX         #$40
+                BNE         tia_clr
 .ENDMACRO
 
 
@@ -136,14 +136,14 @@ tia_clr:
 
 .MACRO          RIOT_INIT_RAM_TIA_REG
                 ; Clear TIA regs (0x0040-0x007F) and RIOT RAM (0x0080-0x00FF).
-                .LOCAL              ram_tia_clr
-                LDX                 #$00
-                LDA                 #$00
+                .LOCAL      ram_tia_clr
+                LDX         #$00
+                LDA         #$00
 ram_tia_clr:
-                STA                 $40,X
+                STA         $40,X
                 INX
-                CPX                 #$C0
-                BNE                 ram_tia_clr
+                CPX         #$C0
+                BNE         ram_tia_clr
 .ENDMACRO
 
 
@@ -151,11 +151,11 @@ ram_tia_clr:
 ; Initialise RIOT IO registers.
 
 .MACRO          RIOT_INIT_IO_REG
-                LDA                 #$00
+                LDA         #$00
                 ; Port B input.
-                STA                 SWBCNT
+                STA         SWBCNT
                 ; Port A input.
-                STA                 SWACNT
+                STA         SWACNT
 .ENDMACRO
 
 
@@ -164,9 +164,9 @@ ram_tia_clr:
 
 .MACRO          RIOT_INIT_EDC_TIM_REG
                 ; Write Edge-Detect Control PA7, Neg Edge-Detect, Disable Int.
-                STA                 WEDCNEDI
+                STA         WEDCNEDI
                 ; Write Timer, Divide by 1, Disable Int., Clear Timer Int. Flag.
-                STA                 WTIM1DI
+                STA         WTIM1DI
 .ENDMACRO
 
 
@@ -247,7 +247,7 @@ clr_tia
 
 ; Initialise Atari 2600 hardware on a cold start (power-up/reset).!!!!!!!!!!!!!!!!!!!!!!
 ; Note: Interrupt disable (I=1), decimal (D=0), stack (SP=$FF), RAM+TIA clear,
-;       X=A=0. Size = 10 Bytes. Y == $00 for cold Y != 0 for warm.
+;       X=A=0. Size = 10 Bytes. Y == $00 for cold start, Y != 0 for warm start.
 ; Note: 18 Bytes
 
 .MACRO          A2K6_TINY_INIT
@@ -279,4 +279,5 @@ clr_ram_tia:
 ;------------------------------------------------------------------------------
 
 .ENDIF
+
 

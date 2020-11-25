@@ -22,8 +22,8 @@
 ; limitations under the License.
 ;------------------------------------------------------------------------------
 
-                .IFNDEF     __A2K6TIA_INC__
-                .DEFINE     __A2K6TIA_INC__
+                .IFNDEF     __A2K6TIA__INC__
+                .DEFINE     __A2K6TIA__INC__
 
 ;==============================================================================
 ; Atari 2600 TIA chip; Television Interface Adapter (Display, IO, Audio).
