@@ -1,0 +1,24 @@
+;------------------------------------------------------------------------------
+; Joystick and Controller Extra Include.
+;------------------------------------------------------------------------------
+
+; Atari 2600 Common Joystick utilities.
+;REVIEW:            .INCLUDE    "a2k6joy.inc"    ; TODO: Impl.
+
+; Atari 2600 Digital Joystick utilities.
+;REVIEW:            .INCLUDE    "a2k6djoy.inc"    ; TODO: Impl.
+
+; Atari 2600 Analogue Joystick / Paddle utilities.
+;REVIEW:            .INCLUDE    "a2k6ajoy.inc"    ; TODO: Impl.
+
+; Atari 2600 Driving Controller utilities.
+;REVIEW:            .INCLUDE    "a2k6driv.inc"    ; TODO: Impl.
+
+; Atari 2600 Keyboard / Keypad utilities.
+;REVIEW:            .INCLUDE    "a2k6keyb.inc"    ; TODO: Impl.
+
+; Atari 2600 Track Ball utilities.
+;REVIEW:            .INCLUDE    "a2k6trak.inc"    ; TODO: Impl.
+
+; Atari 2600 Light Gun utilities.
+;REVIEW:            .INCLUDE    "a2k6lgun.inc"    ; TODO: Impl.

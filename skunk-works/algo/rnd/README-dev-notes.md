@@ -1,0 +1,1 @@
+For Atari 2600 6502/7 implementation on init if 0 then either use a default or in preference grab timer and store low byte + xor high byte for 16 bit or for rnd_???x_init just store 8 bit time and for rnd_???_init if 0 use timer and if 0 default to init seed.

@@ -1,0 +1,191 @@
+;==============================================================================
+font-name: numbers
+font-style: square
+width:
+height:
+just:
+;------------------------------------------------------------------------------
+
+
+glyph: 0
+    XXX.
+    X.X.
+    X.X.
+    X.X.
+    XXX.
+
+glyph: 1
+    .X..
+    .X..
+    .X..
+    .X..
+    .X..
+
+glyph: 2
+    XXX.
+    ..X.
+    XXX.
+    X...
+    XXX.
+
+glyph: 3
+    XXX.
+    ..X.
+    XXX.
+    ..X.
+    XXX.
+
+glyph: 4
+    X...
+    X...
+    X.X.
+    XXX.
+    ..X.
+
+glyph: 5
+    XXX.
+    X...
+    XXX.
+    ..X.
+    XXX.
+
+glyph: 6
+    XXX.
+    X...
+    XXX.
+    X.X.
+    XXX.
+
+glyph: 7
+    XXX.
+    ..X.
+    ..X.
+    ..X.
+    ..X.
+
+glyph: 8
+    XXX.
+    X.X.
+    XXX.
+    X.X.
+    XXX.
+
+glyph: 9
+    XXX.
+    X.X.
+    XXX.
+    ..X.
+    XXX.
+
+
+glyph: DOT
+    XXX.
+    X.X.
+    XXX.
+    ..X.
+    XXX.
+
+
+glyph: MINUS
+    XXX.
+    X.X.
+    XXX.
+    ..X.
+    XXX.
+
+
+glyph: PLUS
+    XXX.
+    X.X.
+    XXX.
+    ..X.
+    XXX.
+
+
+
+;------------------------------------------------------------------------------
+
+
+
+;==============================================================================
+font-name:
+font-style:
+width:
+height:
+just:
+;------------------------------------------------------------------------------
+just:
+
+
+
+glyph: 0
+    .X..
+    X.X.
+    X.X.
+    X.X.
+    .X..
+
+glyph: 1
+    .X..
+    .X..
+    .X..
+    .X..
+    .X..
+
+glyph: 2
+    XX..
+    ..X.
+    .X..
+    X...
+    XXX.
+
+glyph: 3
+    XX..
+    ..X.
+    XX..
+    ..X.
+    XX..
+
+glyph: 4
+    X...
+    X...
+    X.X.
+    XXX.
+    ..X.
+
+glyph: 5
+    XXX.
+    X...
+    XX..
+    ..X.
+    XX..
+
+glyph: 6
+    .XX.
+    X...
+    XX..
+    X.X.
+    .X..
+
+glyph: 7
+    XXX.
+    ..X.
+    ..X.
+    ..X.
+    ..X.
+
+glyph: 8
+    .X..
+    X.X.
+    .X..
+    X.X.
+    .X..
+
+glyph: 9
+    .X..
+    X.X.
+    .XX.
+    ..X.
+    XX..
+
+

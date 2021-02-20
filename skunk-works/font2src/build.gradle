@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'uk.co.jigglesoft.tool.font2src'
+version '1.0-SNAPSHOT'
+
+application {
+    mainClass = 'uk.co.jigglesoft.tool.font2src.Font2SrcMain'
+    //applicationDefaultJvmArgs = ['-Dgreeting.language=en']
+    //executableDir = 'custom_bin_dir'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // picocli - a mighty tiny Command Line Interface
+    implementation 'info.picocli:picocli:4.6.1'
+
+    //Handlebars - Logic-less and semantic templates with Java
+    implementation 'com.github.jknack:handlebars:4.2.0'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}

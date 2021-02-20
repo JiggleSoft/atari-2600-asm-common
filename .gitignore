@@ -12,8 +12,11 @@ tmp/**/*
 *.bak
 *.swp
 
-build/binout/
-build/**/binout/
+lost-and-found/build/binout/
+lost-and-found/build/**/binout/
 
-examples/binout/
-examples/**/binout/
+example/binout/
+example/**/binout/
+
+/build/**
+

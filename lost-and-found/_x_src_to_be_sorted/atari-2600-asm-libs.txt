@@ -1,0 +1,28 @@
+	INIT_RESET
+
+	sei
+
+	cld
+
+	ldx	#$00
+	txa
+loop:
+	dex
+	txs
+	pha
+	bne	loop
+
+	tay
+
+	; init RIOT unnecessary - reset will set ddr to input and output buffer values = 0 but they will be disabled as they are inputs anyway. Timer ?undefined? initialise before use.
+	
+
+
+
+
+: Q: Is it okay to just zero all of the TIA. hittin TIA WSYNC likely to cause delay - not a biggie.
+
+
+
+
+
